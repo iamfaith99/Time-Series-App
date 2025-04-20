@@ -90,10 +90,6 @@ Deep learning models require additional setup:
 - PyTorch (automatically installed with `darts[pytorch]`)
 - CUDA (for GPU acceleration, optional)
 
-## License
-
-[Your License]
-
 ## Author
 
 Weldon T. Antoine III
