@@ -1,0 +1,93 @@
+[tool.poetry]
+name = "time-series-forecasting-streamlit-application"
+version = "0.1.0"
+description = "Streamlit Time Series Forecasting Application with functional programming approach"
+authors = ["Weldon T. Antoine III <your_email@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.9.7 || >3.9.7,<=3.12"
+streamlit = ">=1.44.1,<2.0.0"
+pandas = ">=2.2.3,<3.0.0"
+numpy = ">=1.25.0,<2.0.0"
+plotly = ">=6.0.1,<7.0.0"
+scikit-learn = ">=1.6.1,<2.0.0"
+pmdarima = ">=2.0.4,<3.0.0"
+statsmodels = ">=0.14.4,<0.15.0"
+prophet = ">=1.1.6,<2.0.0"
+neuralprophet = ">=0.9.0,<0.10.0"
+u8darts = {extras = ["prophet", "torch", "xgboost"], version = "^0.35.0"}
+
+[tool.poetry.group.dev.dependencies]
+black = ">=24.2.0"
+ruff = ">=0.3.0"
+mypy = ">=1.8.0"
+pytest = ">=8.0.0"
+hypothesis = ">=6.98.0"
+pre-commit = ">=3.6.0"
+ipykernel = ">=6.29.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4"]
+ignore = []
+fixable = ["I001", "E741"]
+unfixable = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["time_series_app"]
+
+[tool.mypy]
+namespace_packages = false
+explicit_package_bases = false
+python_version = "3.9"
+
+# Pragmatic settings for a functional programming approach
+disallow_untyped_defs = false  # Too strict for initial implementation
+disallow_incomplete_defs = false  # Too strict for initial implementation
+check_untyped_defs = true
+disallow_untyped_decorators = false  # Many decorators from libraries lack types
+no_implicit_optional = true
+strict_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = false  # We need some ignores for third-party libs
+warn_return_any = false  # Too strict with external libraries
+warn_unreachable = true
+
+# Ignore missing imports for third-party libraries without type stubs
+[[tool.mypy.overrides]]
+module = [
+    "pandas.*",
+    "numpy.*",
+    "streamlit.*",
+    "plotly.*",
+    "sklearn.*",
+    "pmdarima.*",
+    "statsmodels.*",
+    "prophet.*",
+    "neuralprophet.*",
+    "darts.*",
+    "u8darts.*"
+]
+ignore_missing_imports = true
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+python_classes = "Test*"
